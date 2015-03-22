@@ -1,0 +1,150 @@
+ターミナル上のmysql使用
+・MAMPをカレントディレクトリに
+cd /Applications/MAMP/Library/bin/
+
+・mysqlにアクセス
+　./mysql -u root -p root
+
+・データベースの作成
+CREATE DATBASE データベース名;
+-> Query OK, 1 row affected (0.01 sec)
+
+・データベースの表示
+SHOW DATABASES;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| my_db              |
+| mysql              |
+| performance_schema |
++--------------------+
+4 rows in set (0.00 sec)
+
+
+・データベースの使用
+USE データベース名;
+-> Database changed
+
+・使用データベースの確認
+SELECT　DATABASE();
+-+------------+
+| DATABASE() |
++------------+
+| my_db      |
++------------+
+
+・テーブルの作成
+ CREATE TABLE テーブル名(カラム１名前 Vデータ型１, カラム名２ データ型２,カラム名３　データ型);
+ex)  CREATE TABLE my_tb(id VARCHAR(10), name VARCHAR(10),age INT);
+
+・データ型種類
+<数字>
+INT：整数
+FLOAT：実数
+DECIMAL：固定小数点
+＜文字列＞
+CHAR；固定長の文字列(255文字まで)
+VARCHAR：可変長の文字列
+TEXT:長い文字列
+LONGTEXT：とても長い文字列
+＜日付・時刻型＞
+DATETIME：日付と時刻
+DATE:日付
+YEAR:年
+TIME:時刻
+
+・テーブルの表示
+SHOW TABLES;
+
+・テーブルのカラム構造を見る
+DESC テーブル名
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| id    | varchar(10) | YES  |     | NULL    |       |
+| name  | varchar(10) | YES  |     | NULL    |       |
+| age   | int(11)     | YES  |     | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+
+・テーブルの削除
+DROB TABLE テーブル名
+
+・データの挿入
+INSERT INTO テーブル名（カラム名１、カラム名２、カラム名３）, VALUES
+(データ１、データ２、データ３)、（データ１、データ２・・）
+
+INSERT INTO テーブル名（カラム名１、カラム名２）VALUES(データ１、データ２)
+
+上から順に入力する場合
+INSERT INTO テーブル名　VALUES(データ１、データ２)
+
+・テーブルの内容をチェックする
+SELECT カラム名１、カラム名２、カラム名３ FROM テーブル名
+
+mysql> SELECT id,name,age FROM my_tb;
++------+--------+------+
+| id   | name   | age  |
++------+--------+------+
+| taro | YUYA   |   12 |
+| hane | HANAKO |   14 |
++------+--------+------+
+
+・カラムのデータ型を変更する
+ALTER TABLE テーブル名 MODIFY カラム名 データ型;
+
+・カラム名を変更する
+ALTER TABLE テーブル名 CHANGE 変更前のカラム名 変更後のカラム名　データ型
+
+・カラムの追加と削除
+ALTER TABLE テーブル名 ADD カラム名　データ型；
+ALTER TABLE テーブル名 DROP カラム名;
+
+・主キーの作成
+CREATE TABLE テーブル名 (カラム名 データ型 PRIMARY KEY…);
+
+・連続番号機能
+CREATE TABLE テーブル名(カラム名 データ型 AUTO_INCREMENT PRIMARY KEY,…);
+
+・カラム名を別の名前にして表示する
+SELECT フィールド1 AS エイリアス1,フィールド2 AS エイリアス2,… FROM テーブル名;
+
+・データの計算
+SLECT age-20 AS 成人からの経過年数 FROM my_tb;
+
+・文字列の結合
+SELECT CONCAT(id, ‘さん、こんにちは’) FROM my_tb;
+
+・文字列を取り出す
+SELECT RIGHT(id,取り出す数) FROM my_tb;
+
+・PHPデータベースの接続
+① 
+sqlへの接続
+$link = mysql_connect(‘localhost’,’root’,’root’);
+データベースの接続
+$db_selected = mysql_select_db(‘BLOG’,$link);
+クエリー文
+$result = mysql_query(‘SELECT * FROM users’);
+取得したデータを連想配列にする
+$row = mysql_fetch_assoc($result)
+mysqlの終了
+mysql_close($link);
+
+
+②
+データベース接続
+try {
+	$dbh = new PDO(‘mysql:host=localhost; dbname=BLOG’,’root’,’root’);
+} catch(PDOException $e){
+	var_dump($e-> getMessage());
+}
+
+$sql = “select * from users”;
+$stmt = $dbh -> query($sql);
+
+foreach($stmt-> fetchAll(PDO::FETCH_ASSOC)as $user){
+	var_dum($user[‘name’])
+}
+
+

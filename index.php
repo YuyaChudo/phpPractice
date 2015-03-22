@@ -1,6 +1,18 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+	<meta charset="UTF-8"/>
+	<title>php practice</title>
+</head>
+<body>
+	<h1>php practice</h1>
+	<form action="get_info.php" method="post">
+	<input type="text" name="birthday" value="">
+	<input type="submit" value="submit">	
+	</form>
+
 <?php 
-
-
+echo "hello world";
 // 変数：値につけるラベル
 // $で始まり、英数字_を使うことができる
 // ex) $message = "hello world";
@@ -85,12 +97,98 @@
 
 
 
+// -----------------------------------------------------
+//　日付や時間に関する関数
+// mktime
+// time()
+// UNIXタイムスタンプ（1970/01/01 00:00からの経過秒数）
+// mktime(時間、分、秒、月、日)
+// strtotime(2012/2/12 11:00:00)
+// 特定日付のフォーマットに変更する
+// date();
+// echo date("Y年m月d日 H時i分s秒");
 
 
 
+// -----------------------------------------------------
+// ファイルの書き込み
+// is_writable("ファイル名") : ファイル書き込みできるか否か
+// fopen("ファイル名", "a or w(ファイル書き込み方法)") a: 末尾　w:最初
+// fopen("","") -> file pointer resourceが返ってくる
+// もし返ってこない場合＝開けない
+// fwrite(file pointer resource, 書き込む内容) : 書き込み、true/falseを返す
+
+// $testFile = "READ_ME.txt";
+// $contents = "Hello";
+
+// if(is_writable($testFile)){
+
+// 	if(!$fp = fopen($testFile,"a"){
+// 		echo "could not open!";
+// 		exit;
+// 	}
+
+// 	if(fwrite($fp, $contents) === false){
+// 		echo "could not write!";
+// 		exit;
+// 	}
+
+// 	echo "success";
+
+// 	// 終了処理
+// 	fclose($fp);
+
+// } else {
+// 	echo "not writable!";
+// 	exit;
+// }
 
 
+// -----------------------------------------------------
+// ファイルからデータを呼び出す
+// fopen(ファイル名, "r(読み込む)");
+// fread(ファイル名, ファイルサイズ：どれだけ読み込むか);
+// filesize(ファイル名);　：ファイルサイズの取得
+
+// $testFile = "READ_ME.txt";
+
+// if (!$fp = fopen($testFile, "r")){
+// 	echo "could not open";
+// 	exit;
+// }
+
+// $contents = fread($fp, filesize($testFile));
+// var_dump($contents);
+
+// fclose($fp);
 
 
+// -----------------------------------------------------
+
+//  ファイルの読み込み（別方法）
+// file_get_contents(ファイル名);
+// web siteを取得する
+// file_get_contents("http://google.com");
+
+// $testFile = "READ_ME.txt";
+// $contents = file_get_contents("http://dotinstall.com/lessons/basic_php_beginner/6831");
+// var_dump($contents);
+
+// -----------------------------------------------------
+// フォームからのデータを取る
+// <form action="get_info.php" method="post">
+	// <input type="text" name="birthday" value="">
+	// <input type="submit" value="submit">	
+// </form> 
+//
+// get_info内
+// <?php 
+//  $birthday = $_POST['birthday'];
+//  $youbi = date('l(曜日のフォーマット)', $birthday);
+// -----------------------------------------------------
+
+// データベースへの接続
 
 ?>
+</body>
+</html>
